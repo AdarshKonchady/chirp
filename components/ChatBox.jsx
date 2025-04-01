@@ -35,18 +35,6 @@ export default function ChatBox() {
     event.preventDefault();
   };
 
-  // Handle focus to ensure visibility on mobile
-  const handleFocus = () => {
-    // Add a small delay to allow the keyboard to appear
-    setTimeout(() => {
-      // Scroll to the bottom of the page to make input visible
-      window.scrollTo(0, document.body.scrollHeight);
-      
-      // On some devices, we need to scroll the form into view
-      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }, 300);
-  };
-
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? 'me' : 'other';
     return (
@@ -74,8 +62,6 @@ export default function ChatBox() {
           placeholder="Type a message..."
           onChange={(e) => setMessageText(e.target.value)}
           onKeyPress={handleKeyPress}
-          onFocus={handleFocus}
-          onTouchStart={handleFocus}
           className={styles.textarea}
         ></textarea>
         <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>

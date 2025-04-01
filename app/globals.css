@@ -9,7 +9,6 @@ body {
   background-color: #0f0f0f;
   color: #f5f5f5;
   height: 100%;
-  overflow: hidden;
 }
 
 * {
@@ -39,28 +38,21 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 40px);
+  width: 100%;
   max-width: 900px;
-  margin: 10px auto;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0px 10px 30px rgba(255, 0, 0, 0.15);
-  background-color: #1e1e1e;
-  border: 1px solid #333;
+  margin: 0 auto;
   flex: 1;
-  position: relative;
+  background-color: #1e1e1e;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  overflow: hidden;
 }
 
 .title {
@@ -68,7 +60,6 @@ main {
   justify-content: center;
   align-items: center;
   height: 60px;
-  min-height: 60px;
   margin: 0;
   color: white;
   background: linear-gradient(to right, #ff0000, #8b0000);
@@ -78,8 +69,6 @@ main {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
-  flex-shrink: 0;
-  z-index: 10;
 }
 
 .title-icon {
@@ -130,13 +119,11 @@ footer {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 50px;
-  min-height: 50px;
+  height: 40px;
   color: #888;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   border-top: 1px solid #333;
   background-color: #0f0f0f;
-  flex-shrink: 0;
 }
 
 .logo {
@@ -179,28 +166,15 @@ footer {
 
 @media (max-width: 600px) {
   main {
-    width: calc(100% - 20px);
-    margin: 5px auto;
-    border-radius: 12px;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   
   .title {
     font-size: 1.3rem;
-    height: 50px;
-    min-height: 50px;
-  }
-  
-  footer {
-    height: 40px;
-    min-height: 40px;
-    font-size: 0.8rem;
-  }
-  
-  .container {
-    overflow: hidden;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
   }
 }
 
