@@ -51,6 +51,8 @@ main {
   box-shadow: 0px 10px 30px rgba(255, 0, 0, 0.15);
   background-color: #1e1e1e;
   border: 1px solid #333;
+  position: relative;
+  height: calc(100vh - 40px - 80px);
 }
 
 .title {
@@ -166,10 +168,22 @@ footer {
   main {
     width: calc(100% - 20px);
     margin: 10px auto;
+    height: calc(100vh - 20px - 80px);
   }
   
   .title {
     font-size: 1.5rem;
+  }
+  
+  .container {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
   }
 }
 

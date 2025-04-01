@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useChannel } from 'ably/react';
 import styles from './ChatBox.module.css';
 
 export default function ChatBox() {
-  let inputBox = null;
-  let messageEnd = null;
+  const inputBoxRef = useRef(null);
+  const messageEndRef = useRef(null);
+  const formRef = useRef(null);
 
   const [messageText, setMessageText] = useState('');
   const [receivedMessages, setMessages] = useState([]);
@@ -18,7 +19,7 @@ export default function ChatBox() {
   const sendChatMessage = (messageText) => {
     channel.publish({ name: 'chat-message', data: messageText });
     setMessageText('');
-    inputBox.focus();
+    inputBoxRef.current?.focus();
   };
 
   const handleFormSubmission = (event) => {
@@ -34,6 +35,18 @@ export default function ChatBox() {
     event.preventDefault();
   };
 
+  // Handle focus to ensure visibility on mobile
+  const handleFocus = () => {
+    // Add a small delay to allow the keyboard to appear
+    setTimeout(() => {
+      // Scroll to the bottom of the page to make input visible
+      window.scrollTo(0, document.body.scrollHeight);
+      
+      // On some devices, we need to scroll the form into view
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 300);
+  };
+
   const messages = receivedMessages.map((message, index) => {
     const author = message.connectionId === ably.connection.id ? 'me' : 'other';
     return (
@@ -44,28 +57,25 @@ export default function ChatBox() {
   });
 
   useEffect(() => {
-    messageEnd.scrollIntoView({ behaviour: 'smooth' });
-  });
+    // Scroll to the latest message
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [receivedMessages]);
 
   return (
     <div className={styles.chatHolder}>
       <div className={styles.chatText}>
         {messages}
-        <div
-          ref={(element) => {
-            messageEnd = element;
-          }}
-        ></div>
+        <div ref={messageEndRef}></div>
       </div>
-      <form onSubmit={handleFormSubmission} className={styles.form}>
+      <form ref={formRef} onSubmit={handleFormSubmission} className={styles.form}>
         <textarea
-          ref={(element) => {
-            inputBox = element;
-          }}
+          ref={inputBoxRef}
           value={messageText}
           placeholder="Type a message..."
           onChange={(e) => setMessageText(e.target.value)}
           onKeyPress={handleKeyPress}
+          onFocus={handleFocus}
+          onTouchStart={handleFocus}
           className={styles.textarea}
         ></textarea>
         <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>
